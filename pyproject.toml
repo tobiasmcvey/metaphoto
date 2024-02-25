@@ -1,0 +1,32 @@
+[project]
+name = "metaphoto"
+version = "0.1.0"
+description = "project to label my photos with metadata"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+
+dependencies = [
+    "pillow"
+]
+
+[project.optional-dependencies]
+dev = [
+    "ipykernel",
+    "black",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/tobiasmcvey/metaphoto"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests", "testing"]
+
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
