@@ -1,5 +1,4 @@
 # %%
-import os
 import datetime
 import dateutil.parser
 
@@ -30,11 +29,6 @@ https://stackoverflow.com/questions/23064549/get-date-and-time-when-photo-was-ta
 TODO add parser so it can be run as a command line tool
 TODO make the program work for video as well
 """
-# %%
-images = []
-target_dir = "../../data/pictures/"
-files = os.listdir(target_dir)
-
 
 # %%
 def get_exif(target_dir, file_name) -> Exif:
@@ -58,30 +52,10 @@ def get_exif_ifd(exif):
     info = exif.get_ifd(key)
     return {TAGS.get(key, key): value for key, value in info.items()}
 
-
 # %%
-# this works for a single file
-exif = get_exif(target_dir, "IMG_0763.jpeg")
-d = get_exif_ifd(exif)
-d
-
-# %%
-# works for a list of files
-data = []
-for i in files:
-    exif = get_exif(target_dir, i)
-    ifd = get_exif_ifd(exif)
-    data.append(ifd)
-# %%
-"""
-The data we are looking for is in the field DateTimeOriginal
-Retrieve it and convert it into datetime
-Then created new filenames
-"""
-
 def get_created_time(data: list):
     """
-    Get the date the picture was taken as a string
+    Get the date the picture was taken (DateTimeOriginal) as a string
     """
     created_datestamps = []
     for i in data:
@@ -109,19 +83,3 @@ def just_dates(data: list):
     for i in data:
         just_dates.append(datetime.datetime.date(i))
     return just_dates
-# %%
-ctime = get_created_time(data=data)
-# %% 
-cleaned = clean_datestamps(data=ctime)
-# %%
-dates = just_dates(data=cleaned)
-# %%
-# Next: append created date to filename
-# %%
-for x,y in zip(files, dates):
-    source = target_dir + x
-    destination = target_dir + y.strftime("%Y-%m-%d") + "-" + x
-    os.rename(source, destination)
-# %%
-os.listdir(target_dir) # print list of new filenames
-# %%
