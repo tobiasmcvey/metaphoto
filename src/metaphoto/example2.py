@@ -1,6 +1,5 @@
 # %%
 import os
-import time
 import datetime
 import dateutil.parser
 
@@ -35,19 +34,14 @@ TODO make the program work for video as well
 images = []
 target_dir = "../../data/pictures/"
 files = os.listdir(target_dir)
-# files = [
-#     os.path.join(path, name)
-#     for path, subdirs, files in os.walk(target_dir)
-#     for name in files
-# ]
 
 
 # %%
-def get_exif(file_name) -> Exif:
+def get_exif(target_dir, file_name) -> Exif:
     """
     Get EXIF data for a single image
     """
-    image: Image.Image = Image.open(file_name)
+    image: Image.Image = Image.open(target_dir + file_name)
     return image.getexif()
 
 
@@ -67,7 +61,7 @@ def get_exif_ifd(exif):
 
 # %%
 # this works for a single file
-exif = get_exif("../../data/pictures/IMG_0763.jpeg")
+exif = get_exif(target_dir, "IMG_0763.jpeg")
 d = get_exif_ifd(exif)
 d
 
@@ -75,7 +69,7 @@ d
 # works for a list of files
 data = []
 for i in files:
-    exif = get_exif(i)
+    exif = get_exif(target_dir, i)
     ifd = get_exif_ifd(exif)
     data.append(ifd)
 # %%
