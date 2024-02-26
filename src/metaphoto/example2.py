@@ -33,12 +33,13 @@ TODO make the program work for video as well
 """
 # %%
 images = []
-target_dir = "../../data/pictures"
-files = [
-    os.path.join(path, name)
-    for path, subdirs, files in os.walk(target_dir)
-    for name in files
-]
+target_dir = "../../data/pictures/"
+files = os.listdir(target_dir)
+# files = [
+#     os.path.join(path, name)
+#     for path, subdirs, files in os.walk(target_dir)
+#     for name in files
+# ]
 
 
 # %%
@@ -123,4 +124,10 @@ dates = just_dates(data=cleaned)
 # %%
 # Next: append created date to filename
 # %%
-
+for x,y in zip(files, dates):
+    source = target_dir + x
+    destination = target_dir + y.strftime("%Y-%m-%d") + "-" + x
+    os.rename(source, destination)
+# %%
+os.listdir(target_dir) # print list of new filenames
+# %%
