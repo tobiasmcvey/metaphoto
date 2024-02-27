@@ -30,6 +30,7 @@ TODO add parser so it can be run as a command line tool
 TODO make the program work for video as well
 """
 
+
 # %%
 def get_exif(target_dir, file_name) -> Exif:
     """
@@ -52,6 +53,7 @@ def get_exif_ifd(exif):
     info = exif.get_ifd(key)
     return {TAGS.get(key, key): value for key, value in info.items()}
 
+
 # %%
 def get_created_time(data: list):
     """
@@ -61,6 +63,8 @@ def get_created_time(data: list):
     for i in data:
         created_datestamps.append(i["DateTimeOriginal"])  # got our data :D
     return created_datestamps
+
+
 # %%
 def clean_datestamps(data: list):
     """
@@ -74,6 +78,8 @@ def clean_datestamps(data: list):
             dateutil.parser.isoparse(i)
         )  # converted the datetime into dates and time of day
     return cleaned_datestamps
+
+
 # %%
 def just_dates(data: list):
     """

@@ -1,7 +1,14 @@
 # %%
 import os
 
-from get_metadata import get_exif, get_exif_ifd, get_created_time, clean_datestamps, just_dates
+from get_metadata import (
+    get_exif,
+    get_exif_ifd,
+    get_created_time,
+    clean_datestamps,
+    just_dates,
+)
+
 # %%
 images = []
 target_dir = "../../data/pictures/"
@@ -21,17 +28,17 @@ for i in files:
 
 # %%
 ctime = get_created_time(data=data)
-# %% 
+# %%
 cleaned = clean_datestamps(data=ctime)
 # %%
 dates = just_dates(data=cleaned)
 # %%
 # Next: append created date to filename
 # %%
-for x,y in zip(files, dates):
+for x, y in zip(files, dates):
     source = target_dir + x
     destination = target_dir + y.strftime("%Y-%m-%d") + "-" + x
     os.rename(source, destination)
 # %%
-os.listdir(target_dir) # print list of new filenames
+os.listdir(target_dir)  # print list of new filenames
 # %%
